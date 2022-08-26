@@ -3,7 +3,6 @@ from typing import List, Optional, Tuple
 
 import numpy as np
 import tensorflow as tf
-
 from tensorflow import keras
 
 
@@ -15,8 +14,9 @@ class SaveWeights(keras.callbacks.Callback):
             self.model.history.history["weights"].append(self.model.get_weights())
 
 
-def restore_arma_parameters(model_weights: List[np.array], p: int, add_intercept: bool = False)\
-        -> Tuple[np.array, np.array, Optional[np.array]]:
+def restore_arma_parameters(
+    model_weights: List[np.array], p: int, add_intercept: bool = False
+) -> Tuple[np.array, np.array, Optional[np.array]]:
 
     validate_weight_list_length(model_weights, add_intercept)
 
@@ -40,7 +40,9 @@ def validate_weight_list_length(weight_list: list, add_intercept: bool) -> None:
     assert len(weight_list) == 3 if add_intercept else 2
 
 
-def prepare_arma_input(p: int, endog: np.array, sequence_length: int = 10) -> Tuple[np.array, np.array]:
+def prepare_arma_input(
+    p: int, endog: np.array, sequence_length: int = 10
+) -> Tuple[np.array, np.array]:
     # Input:      T x k or T,
     # Output: X: (T - sequence_length - p + 1) x sequence_length x k x p
     #         y: (T - sequence_length - p + 1) x k
@@ -48,14 +50,26 @@ def prepare_arma_input(p: int, endog: np.array, sequence_length: int = 10) -> Tu
     if endog.ndim == 1:
         endog = endog.reshape((-1, 1))
     endog = np.expand_dims(endog, axis=-1)
-    endog_rep = np.concatenate([endog[p - 1 :, ...]] + [endog[p - i - 1 : -i, ...] for i in range(1, p)], axis=-1)
-    ts_gen = keras.preprocessing.sequence.TimeseriesGenerator(endog_rep, endog_rep, sequence_length)
+    endog_rep = np.concatenate(
+        [endog[p - 1 :, ...]] + [endog[p - i - 1 : -i, ...] for i in range(1, p)],
+        axis=-1,
+    )
+    ts_gen = keras.preprocessing.sequence.TimeseriesGenerator(
+        endog_rep, endog_rep, sequence_length
+    )
     X = np.vstack([ts_gen[i][0] for i in range(len(ts_gen))])
     y = np.vstack([ts_gen[i][1][..., 0] for i in range(len(ts_gen))])
     return X, y
 
 
-def simulate_arma_process(ar: np.array, ma: np.array, alpha: float, n_steps: int = 1000, std: float = 1.0, burn_in: int = 50) -> np.array:
+def simulate_arma_process(
+    ar: np.array,
+    ma: np.array,
+    alpha: float,
+    n_steps: int = 1000,
+    std: float = 1.0,
+    burn_in: int = 50,
+) -> np.array:
     steps_incl_burn_in = n_steps + burn_in
     eps = np.random.normal(0, std, steps_incl_burn_in)
     res = np.zeros(steps_incl_burn_in)
@@ -70,7 +84,14 @@ def simulate_arma_process(ar: np.array, ma: np.array, alpha: float, n_steps: int
     return res[burn_in:]
 
 
-def simulate_varma_process(ar: np.array, ma: np.array, alpha: np.array, n_steps: int = 1000, std: float = 1.0, burn_in: int = 50) -> np.array:
+def simulate_varma_process(
+    ar: np.array,
+    ma: np.array,
+    alpha: np.array,
+    n_steps: int = 1000,
+    std: float = 1.0,
+    burn_in: int = 50,
+) -> np.array:
     # AR Shape: k x k x p
     # MA Shape: k x k x q
     # Output: n_steps x k

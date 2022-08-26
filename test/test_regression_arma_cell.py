@@ -1,12 +1,20 @@
 from typing import Any
 
 import numpy as np
-from armacell import ARMA
-from armacell.helpers import SaveWeights, prepare_arma_input, restore_arma_parameters, set_all_seeds, simulate_arma_process, simulate_varma_process
-from armacell.plotting import plot_convergence
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.statespace.varmax import VARMAX
 from tensorflow import keras
+
+from armacell import ARMA
+from armacell.helpers import (
+    SaveWeights,
+    prepare_arma_input,
+    restore_arma_parameters,
+    set_all_seeds,
+    simulate_arma_process,
+    simulate_varma_process,
+)
+from armacell.plotting import plot_convergence
 
 
 def test_ARMA_1_1() -> None:
@@ -66,7 +74,9 @@ def test_ARMA_2_2_multi_unit() -> None:
 
     X_train, y_train = prepare_arma_input(max(p, q), y)
     Y_train = np.stack([y_train, y_train], axis=-1)
-    tf_model = get_trained_ARMA_p_q_model(q, X_train, Y_train, units=2, plot_training=True)
+    tf_model = get_trained_ARMA_p_q_model(
+        q, X_train, Y_train, units=2, plot_training=True
+    )
 
     raw_ar_weights = tf_model.get_weights()[0]
     raw_ma_weights = tf_model.get_weights()[1]
@@ -106,22 +116,34 @@ def test_VARMA_1_1_2() -> None:
     assert np.all(np.abs(gamma - varma_model.coefficient_matrices_vma[0]) < 0.05)
 
 
-def run_p_q_test(arparams: np.array, maparams: np.array, alpha_true: float = 0, plot_training: bool = False, **kwargs: int) -> None:
+def run_p_q_test(
+    arparams: np.array,
+    maparams: np.array,
+    alpha_true: float = 0,
+    plot_training: bool = False,
+    **kwargs: int
+) -> None:
     p = len(arparams)
     q = len(maparams)
     add_intercept = alpha_true != 0
 
     y = simulate_arma_process(arparams, maparams, alpha_true, n_steps=25000, std=2)
 
-    arima_model = ARIMA(endog=y, order=(p, 0, q), trend="c" if add_intercept else "n").fit()  # order = (p,d,q)
+    arima_model = ARIMA(
+        endog=y, order=(p, 0, q), trend="c" if add_intercept else "n"
+    ).fit()  # order = (p,d,q)
 
     X_train, y_train = prepare_arma_input(max(p, q), y)
-    tf_model = get_trained_ARMA_p_q_model(q, X_train, y_train, add_intercept, plot_training, **kwargs)
+    tf_model = get_trained_ARMA_p_q_model(
+        q, X_train, y_train, add_intercept, plot_training, **kwargs
+    )
 
     if plot_training:
         plot_convergence(tf_model, p, add_intercept, arima_model)
 
-    beta, gamma, alpha = restore_arma_parameters(tf_model.get_weights(), p, add_intercept)
+    beta, gamma, alpha = restore_arma_parameters(
+        tf_model.get_weights(), p, add_intercept
+    )
     assert np.all(np.abs(beta - arima_model.arparams) < 0.05)
     assert np.all(np.abs(gamma - arima_model.maparams) < 0.05)
     if add_intercept:
@@ -129,7 +151,12 @@ def run_p_q_test(arparams: np.array, maparams: np.array, alpha_true: float = 0, 
 
 
 def get_trained_ARMA_p_q_model(
-    q: int, X_train: np.array, y_train: np.array, add_intercept: bool = False, plot_training: bool = False, **kwargs: Any
+    q: int,
+    X_train: np.array,
+    y_train: np.array,
+    add_intercept: bool = False,
+    plot_training: bool = False,
+    **kwargs: Any
 ) -> keras.Sequential:
     tf_model = keras.Sequential(
         [
@@ -138,5 +165,7 @@ def get_trained_ARMA_p_q_model(
     )
     tf_model.compile(loss="mse", optimizer="adam", run_eagerly=False)
     callback = [SaveWeights()] if plot_training else []
-    tf_model.fit(X_train, y_train, epochs=100, verbose=True, batch_size=200, callbacks=callback)
+    tf_model.fit(
+        X_train, y_train, epochs=100, verbose=True, batch_size=200, callbacks=callback
+    )
     return tf_model

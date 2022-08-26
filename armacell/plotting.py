@@ -1,12 +1,22 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from armacell.helpers import restore_arma_parameters
 from statsmodels.tsa.arima.model import ARIMAResults
 from tensorflow import keras
 
+from armacell.helpers import restore_arma_parameters
 
-def plot_convergence(model: keras.Model, p: int, add_intercept: bool, arima_model: ARIMAResults, path: str = "") -> None:
-    transformed_parameters = [restore_arma_parameters(w, p, add_intercept) for w in model.history.history["weights"]]
+
+def plot_convergence(
+    model: keras.Model,
+    p: int,
+    add_intercept: bool,
+    arima_model: ARIMAResults,
+    path: str = "",
+) -> None:
+    transformed_parameters = [
+        restore_arma_parameters(w, p, add_intercept)
+        for w in model.history.history["weights"]
+    ]
     beta = np.stack(w[0] for w in transformed_parameters)
     gamma = np.stack(w[1] for w in transformed_parameters)
 
@@ -44,7 +54,7 @@ def plot_convergence(model: keras.Model, p: int, add_intercept: bool, arima_mode
     ax.set_position([box.x0, box.y0, box.width * 0.9, box.height])
 
     # Put a legend to the right of the current axis
-    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
     if path:
         plt.savefig(path)
     plt.show()

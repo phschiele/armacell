@@ -1,5 +1,10 @@
 import numpy as np
-from armacell.helpers import prepare_arma_input, restore_arma_parameters, simulate_varma_process
+
+from armacell.helpers import (
+    prepare_arma_input,
+    restore_arma_parameters,
+    simulate_varma_process,
+)
 
 
 def test_restore_arma_parameters_1_1() -> None:
@@ -38,7 +43,9 @@ def test_restore_arma_parameters_1_1_intercept() -> None:
     beta_breve = np.array([-0.3])
     gamma_breve = np.array([0.4])
     alpha = np.array([0.2])
-    beta, gamma, alpha = restore_arma_parameters([beta_breve, gamma_breve, alpha], 1, add_intercept=True)
+    beta, gamma, alpha = restore_arma_parameters(
+        [beta_breve, gamma_breve, alpha], 1, add_intercept=True
+    )
     assert np.allclose(beta, np.array([0.1]))
     assert np.allclose(gamma, np.array([-0.4]))
 
@@ -47,7 +54,9 @@ def test_restore_arma_parameters_1_2_intercept() -> None:
     beta_breve = np.array([-0.3])
     gamma_breve = np.array([0.4, 0.2])
     alpha = np.array([0.2])
-    beta, gamma, alpha = restore_arma_parameters([beta_breve, gamma_breve, alpha], 1, add_intercept=True)
+    beta, gamma, alpha = restore_arma_parameters(
+        [beta_breve, gamma_breve, alpha], 1, add_intercept=True
+    )
     assert np.allclose(beta, np.array([0.1]))
     assert np.allclose(gamma, np.array([-0.4, -0.2]))
     assert np.allclose(alpha, np.array([0.2]))
@@ -57,7 +66,9 @@ def test_restore_arma_parameters_2_2_intercept() -> None:
     beta_breve = np.array([-0.3, 0.1])
     gamma_breve = np.array([0.4, 0.2])
     alpha = np.array([0.2])
-    beta, gamma, alpha = restore_arma_parameters([beta_breve, gamma_breve, alpha], 2, add_intercept=True)
+    beta, gamma, alpha = restore_arma_parameters(
+        [beta_breve, gamma_breve, alpha], 2, add_intercept=True
+    )
     assert np.allclose(beta, np.array([0.1, 0.3]))
     assert np.allclose(gamma, np.array([-0.4, -0.2]))
     assert np.allclose(alpha, np.array([0.2]))
@@ -67,7 +78,9 @@ def test_restore_arma_parameters_2_1_intercept() -> None:
     beta_breve = np.array([-0.3, 0.3])
     gamma_breve = np.array([0.4])
     alpha = np.array([0.2])
-    beta, gamma, alpha = restore_arma_parameters([beta_breve, gamma_breve, alpha], 2, add_intercept=True)
+    beta, gamma, alpha = restore_arma_parameters(
+        [beta_breve, gamma_breve, alpha], 2, add_intercept=True
+    )
     assert np.allclose(beta, np.array([0.1, 0.3]))
     assert np.allclose(gamma, np.array([-0.4]))
 

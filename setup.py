@@ -16,7 +16,7 @@ setuptools.setup(
     package_dir={"": "armacell"},
     packages=setuptools.find_packages(where="armacell"),
     python_requires=">=3.7",
-    license='Apache License, Version 2.0',
+    license="Apache License, Version 2.0",
     install_requires=[
         "tensorflow",
         "numpy",

@@ -2,7 +2,7 @@ from typing import Any, Optional, Tuple
 
 import tensorflow as tf
 from tensorflow import TensorShape
-from tensorflow.python.keras.layers import AbstractRNNCell, RNN
+from tensorflow.python.keras.layers import RNN, AbstractRNNCell
 
 
 class ArmaCell(AbstractRNNCell):
@@ -42,11 +42,19 @@ class ArmaCell(AbstractRNNCell):
 
     @property
     def output_size(self) -> TensorShape:
-        return TensorShape((self.k * self.units, self.q)) if self.return_lags else TensorShape((self.k * self.units, 1))
+        return (
+            TensorShape((self.k * self.units, self.q))
+            if self.return_lags
+            else TensorShape((self.k * self.units, 1))
+        )
 
     def build(self, input_shape: Tuple[int]) -> None:
 
-        self.kernel = self.add_weight(shape=(self.p, self.units, self.k, self.k), initializer="uniform", name="kernel")
+        self.kernel = self.add_weight(
+            shape=(self.p, self.units, self.k, self.k),
+            initializer="uniform",
+            name="kernel",
+        )
         self.recurrent_kernel = self.add_weight(
             shape=(self.q, self.units, self.k, self.k),
             initializer="uniform",
@@ -54,12 +62,16 @@ class ArmaCell(AbstractRNNCell):
         )
 
         if self.use_bias:
-            self.bias = self.add_weight(shape=(self.k * self.units), name="bias", initializer="zeros")
+            self.bias = self.add_weight(
+                shape=(self.k * self.units), name="bias", initializer="zeros"
+            )
         else:
             self.bias = None
         self.built = True
 
-    def call(self, inputs: tf.Tensor, states: Tuple[tf.Tensor]) -> Tuple[tf.Tensor, tf.Tensor]:
+    def call(
+        self, inputs: tf.Tensor, states: Tuple[tf.Tensor]
+    ) -> Tuple[tf.Tensor, tf.Tensor]:
         # Input:   BATCH x k x max(p,q)
         # Output:  BATCH x (k*units) x 1      if return_lags = False
         #          BATCH x (k*units) x q      if return_lags = True
@@ -109,19 +121,18 @@ class ArmaCell(AbstractRNNCell):
 
 class ARMA(RNN):
     def __init__(
-            self,
-            q: int,
-            input_dim: Tuple[int, int],
-            p: Optional[int] = None,
-            units: int = 1,
-            activation: str = "linear",
-            use_bias: bool = False,
-            return_lags: bool = False,
-            return_sequences: bool = False,
-            **kwargs: Any
+        self,
+        q: int,
+        input_dim: Tuple[int, int],
+        p: Optional[int] = None,
+        units: int = 1,
+        activation: str = "linear",
+        use_bias: bool = False,
+        return_lags: bool = False,
+        return_sequences: bool = False,
+        **kwargs: Any
     ) -> None:
         cell = ArmaCell(
             q, input_dim, p, units, activation, use_bias, return_lags, **kwargs
         )
         super().__init__(cell, return_sequences)
-
