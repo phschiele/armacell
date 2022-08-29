@@ -14,15 +14,15 @@ pip install git+https://github.com/phschiele/armacell.git
 
 ## Getting started
 
-The syntax of the ARMA cell is similar to existing RNN models in tensorflow, with the additional parameter q for the numer of MA lags.
-The number of AR lags are already represented in the preprocessed data.
+The syntax of the ARMA cell is similar to existing RNN models in `tensorflow`, with the additional parameter `q` for the numer of MA lags.
+The number of AR lags are already represented in the preprocessed data, which is handled by `prepare_arma_input`.
 
 Below is an example using the functional model API
 ```python
 x = ARMA(q, input_dim=(n_features, p), units=1, activation="relu", use_bias=True)(x)
  ```
 
-The syntax for the ConvARMA cell is also similar to existing spatiotemporal RNN models. If "return_lags" is True, a subsequent
+The syntax for the ConvARMA cell is also similar to existing spatiotemporal RNN models. If `return_lags=True`, a subsequent
 ConvARMA layer will itself have multiple lags.
 ```python
 x = ConvARMA(
