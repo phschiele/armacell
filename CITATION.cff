@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: "ARMA Cell: A Modular and Effective Approach for Neural Autoregressive Modeling"
 date-released: 2022-08-31
-type: article
+type: software
 authors:
   - family-names: Schiele
     given-names: Philipp
