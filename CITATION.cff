@@ -1,8 +1,8 @@
 cff-version: 1.2.0
-title: "ARMA Cell: A Modular and Effective Approach for Neural Autoregressive Modeling"
 message: "If you use this software, please cite it as below."
+title: "ARMA Cell: A Modular and Effective Approach for Neural Autoregressive Modeling"
 date-released: 2022-08-31
-url: "https://github.com/phschiele/armacell"
+type: article
 authors:
   - family-names: Schiele
     given-names: Philipp
@@ -19,26 +19,8 @@ authors:
     email: david.ruegamer@stat.uni-muenchen.de
     affiliation: Ludwig-Maximilians-Universität München
     orcid: 'https://orcid.org/0000-0002-8772-9202'
-preferred-citation:
-    type: article
-    title: "ARMA Cell: A Modular and Effective Approach for Neural Autoregressive Modeling"
-    authors:
-      - family-names: Schiele
-        given-names: Philipp
-        email: philipp.schiele@stat.uni-muenchen.de
-        affiliation: Ludwig-Maximilians-Universität München
-        orcid: 'https://orcid.org/0000-0002-0101-0388'
-      - family-names: Berninger
-        given-names: Christoph
-        email: christoph.berninger@stat.uni-muenchen.de
-        affiliation: Ludwig-Maximilians-Universität München
-        orcid: 'https://orcid.org/0000-0002-3502-856X'
-      - family-names: Rügamer
-        given-names: David
-        email: david.ruegamer@stat.uni-muenchen.de
-        affiliation: Ludwig-Maximilians-Universität München
-        orcid: 'https://orcid.org/0000-0002-8772-9202'
-    identifiers:
-      - type: other
-        value: 'arXiv:2208.14919'
-        description: The ArXiv preprint of the paper
+identifiers:
+  - type: other
+    value: 'arXiv:2208.14919'
+    description: The ArXiv preprint of the paper
+url: "https://arxiv.org/abs/2208.14919"
