@@ -4,6 +4,8 @@ title: "ARMA Cell: A Modular and Effective Approach for Neural Autoregressive Mo
 type: generic
 doi: 10.48550/ARXIV.2208.14919
 url: "https://arxiv.org/abs/2208.14919"
+publisher: "arXiv"
+year: 2022
 authors:
       - family-names: Schiele
         given-names: Philipp
