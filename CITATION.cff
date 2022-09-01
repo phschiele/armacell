@@ -5,7 +5,7 @@ type: generic
 doi: 10.48550/ARXIV.2208.14919
 url: "https://arxiv.org/abs/2208.14919"
 publisher: "arXiv"
-year: 2022
+date-released: 2022-08-31
 authors:
       - family-names: Schiele
         given-names: Philipp
