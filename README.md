@@ -91,14 +91,15 @@ pytest
 from the root of the repository.
 
 ## Citing
-If you use ARMA cells in your research, please consider citing us by using the following bibtex:
+
+If you use the ARMA cell in your research, please consider citing us by clicking `Cite this repository` on the sidebar, or using the below BibTeX.
 ```BibTeX
 @misc{schiele2022armacell,
-  doi = {10.48550/ARXIV.2208.14919},
-  url = {https://arxiv.org/abs/2208.14919},
   author = {Schiele, Philipp and Berninger, Christoph and R\"ugamer, David},
-  title = {ARMA Cell: A Modular and Effective Approach for Neural Autoregressive Modeling},
-  publisher = {arXiv},
+  doi = {10.48550/ARXIV.2208.14919},
+  title = {{ARMA Cell: A Modular and Effective Approach for Neural Autoregressive Modeling}},
+  url = {https://arxiv.org/abs/2208.14919},
   year = {2022},
+  month = {8}
 }
 ```
