@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Schiele
+    given-names: Philipp
+    orcid: https://orcid.org/0000-0002-0101-0388
+  - family-names: Berninger
+    given-names: Christoph
+    orcid: https://orcid.org/0000-0002-3502-856X
+  - family-names: Rügamer
+    given-names: David
+    orcid: https://orcid.org/0000-0002-8772-9202
+title: "ARMA Cell: A Modular and Effective Approach for Neural Autoregressive Modeling"
+preferred-citation:
+  identifiers:
+    - type: article
+      value: "arXiv:2208.14919"
+      description: The ArXiv preprint of the paper
+date-released: 2022-08-31
