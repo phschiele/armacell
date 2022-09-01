@@ -14,8 +14,8 @@ pip install git+https://github.com/phschiele/armacell.git
 
 ## Getting started
 
-The syntax of the ARMA cell is similar to existing RNN models in `tensorflow`, with the additional parameter `q` for the numer of MA lags.
-The number of AR lags are already represented in the preprocessed data, which is handled by `prepare_arma_input`.
+The syntax of the ARMA cell is similar to existing RNN models in `tensorflow`, with the additional parameter `q` for the number of MA lags.
+The number of AR lags is already represented in the preprocessed data, which is handled by `prepare_arma_input`.
 
 Below is an example using the functional model API
 ```python
