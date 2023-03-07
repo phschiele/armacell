@@ -4,6 +4,9 @@
 ![GitHub](https://img.shields.io/github/license/phschiele/armacell)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+This repo contains the software implementation of the ARMA cell.
+Data and code to reproduce the experiments in our paper can be found at the [armacell_paper](https://github.com/phschiele/armacell_paper) repository.
+
 ## Installation
 
 The ARMA cell can be installed using `pip` as follows
