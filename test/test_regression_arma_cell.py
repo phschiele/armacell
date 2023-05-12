@@ -117,8 +117,8 @@ def test_VARMA_1_1_2() -> None:
 
 
 def run_p_q_test(
-    arparams: np.array,
-    maparams: np.array,
+    arparams: np.ndarray,
+    maparams: np.ndarray,
     alpha_true: float = 0,
     plot_training: bool = False,
     **kwargs: int
@@ -152,8 +152,8 @@ def run_p_q_test(
 
 def get_trained_ARMA_p_q_model(
     q: int,
-    X_train: np.array,
-    y_train: np.array,
+    X_train: np.ndarray,
+    y_train: np.ndarray,
     add_intercept: bool = False,
     plot_training: bool = False,
     **kwargs: Any

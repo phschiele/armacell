@@ -15,8 +15,8 @@ class SaveWeights(keras.callbacks.Callback):
 
 
 def restore_arma_parameters(
-    model_weights: List[np.array], p: int, add_intercept: bool = False
-) -> Tuple[np.array, np.array, Optional[np.array]]:
+    model_weights: List[np.ndarray], p: int, add_intercept: bool = False
+) -> Tuple[np.ndarray, np.ndarray, Optional[np.ndarray]]:
 
     validate_weight_list_length(model_weights, add_intercept)
 
@@ -41,8 +41,8 @@ def validate_weight_list_length(weight_list: list, add_intercept: bool) -> None:
 
 
 def prepare_arma_input(
-    p: int, endog: np.array, sequence_length: int = 10
-) -> Tuple[np.array, np.array]:
+    p: int, endog: np.ndarray, sequence_length: int = 10
+) -> Tuple[np.ndarray, np.ndarray]:
     # Input:      T x k or T,
     # Output: X: (T - sequence_length - p + 1) x sequence_length x k x p
     #         y: (T - sequence_length - p + 1) x k
@@ -63,13 +63,13 @@ def prepare_arma_input(
 
 
 def simulate_arma_process(
-    ar: np.array,
-    ma: np.array,
+    ar: np.ndarray,
+    ma: np.ndarray,
     alpha: float,
     n_steps: int = 1000,
     std: float = 1.0,
     burn_in: int = 50,
-) -> np.array:
+) -> np.ndarray:
     steps_incl_burn_in = n_steps + burn_in
     eps = np.random.normal(0, std, steps_incl_burn_in)
     res = np.zeros(steps_incl_burn_in)
@@ -85,13 +85,13 @@ def simulate_arma_process(
 
 
 def simulate_varma_process(
-    ar: np.array,
-    ma: np.array,
-    alpha: np.array,
+    ar: np.ndarray,
+    ma: np.ndarray,
+    alpha: np.ndarray,
     n_steps: int = 1000,
     std: float = 1.0,
     burn_in: int = 50,
-) -> np.array:
+) -> np.ndarray:
     # AR Shape: k x k x p
     # MA Shape: k x k x q
     # Output: n_steps x k
